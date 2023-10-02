@@ -1,6 +1,12 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
+
+import MyMarker from "./Marker";
+
+import { useGlobalContext } from "../../context";
 
 const Map = () => {
+	const { isLoading, events } = useGlobalContext();
+
 	const position = [27.7172, 85.324];
 
 	return (
@@ -14,9 +20,13 @@ const Map = () => {
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 			/>
-			<Marker position={position}>
-				<Popup>A sample marker on the map.</Popup>
-			</Marker>
+			{!isLoading &&
+				events.map(event => (
+					<MyMarker
+						key={event.id}
+						event={event}
+					/>
+				))}
 		</MapContainer>
 	);
 };

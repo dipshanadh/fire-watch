@@ -1,8 +1,8 @@
-import { useEffect, useReducer, createContext } from "react";
+import { useEffect, useReducer, createContext, useContext } from "react";
 
 import reducer from "./reducer";
 
-const url = "https://eonet.sci.gsfc.nasa.gov/api/v2.1/events";
+const url = "https://eonet.gsfc.nasa.gov/api/v3/events";
 const AppContext = createContext();
 
 const initialState = {
@@ -16,12 +16,16 @@ const AppProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	const fetchData = async () => {
-		dispatch({ type: "LOADING" });
-
 		const res = await fetch(url);
-		const { events } = await res.json();
+		const data = await res.json();
 
-		dispatch({ type: "DISPLAY_MARKER", payload: events });
+		const isWildFire = category => category.id == "wildfires";
+
+		const events = data.events.filter(event =>
+			event.categories.some(isWildFire)
+		);
+
+		dispatch({ type: "UPDATE_EVENTS", payload: events });
 	};
 
 	useEffect(() => {
