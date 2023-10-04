@@ -7,6 +7,7 @@ const Sidebar = () => {
 			<h1 className="sidebar-heading">FireWatch</h1>
 			<PlaceList />
 			<ReportFire />
+			<p className="copy">©Copyright 2023 • FireWatch</p>
 		</div>
 	);
 };

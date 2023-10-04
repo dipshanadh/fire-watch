@@ -1,33 +1,52 @@
+import { useGlobalContext } from "../context";
+
 const Modal = () => {
+	const { currentEvent, closeModal } = useGlobalContext();
+
+	const { title, date, location, distance, link, coordinates } = currentEvent;
+
 	return (
 		<div className="modal">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 24 24"
-				strokeWidth={1.5}
-				stroke="white"
+			<button
 				className="modal-close"
+				onClick={() => closeModal()}
 			>
-				<path
-					strokeLinecap="round"
-					strokeLinejoin="round"
-					d="M6 18L18 6M6 6l12 12"
-				/>
-			</svg>
-			<h2 className="modal-heading">Fire Info:</h2>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					strokeWidth={1.5}
+					stroke="white"
+					width="25px"
+					height="25px"
+				>
+					<path
+						strokeLinecap="round"
+						strokeLinejoin="round"
+						d="M6 18L18 6M6 6l12 12"
+					/>
+				</svg>
+			</button>
+			<a
+				className="modal-heading"
+				href={link}
+				target="_blank"
+			>
+				{title.length > 40 ? title.slice(0, 40) + "..." : title}
+			</a>
 			<div className="modal-body">
 				<p>
-					<span>Loctation:</span> Houston, Texas
+					<span>Loctation:</span> {location}
 				</p>
 				<p>
-					<span>Since:</span> September 26
+					<span>Since:</span> {date}
 				</p>
 				<p>
-					<span>Coordinates:</span> (29.883697, -95.009037)
+					<span>Coordinates:</span> (
+					{`${coordinates[0]}, ${coordinates[1]}`})
 				</p>
 				<p>
-					<span>Distance:</span> 5 KM
+					<span>Distance:</span> {distance} KM
 				</p>
 			</div>
 		</div>

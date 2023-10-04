@@ -7,13 +7,11 @@ import { useGlobalContext } from "../../context";
 const Map = () => {
 	const { isLoading, events } = useGlobalContext();
 
-	const position = [27.7172, 85.324];
-
 	return (
 		<MapContainer
-			center={position}
+			center={[40.758701, -111.876183]}
 			zoom={5}
-			scrollWheelZoom={false}
+			scrollWheelZoom={true}
 			className="map"
 		>
 			<TileLayer

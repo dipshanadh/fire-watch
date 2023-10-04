@@ -9,8 +9,14 @@ const reducer = (state, action) => {
 			return { ...state, isModalOpen: false };
 
 		case "UPDATE_EVENTS":
-			console.log();
 			return { ...state, events: payload, isLoading: false };
+
+		case "UPDATE_CURRENT_EVENT":
+			return {
+				...state,
+				currentEvent: action.payload,
+				isModalOpen: true,
+			};
 
 		default:
 			throw new Error("No matching action type!");
