@@ -5,8 +5,14 @@ const reducer = (state, action) => {
 		case "LOADING":
 			return { ...state, isLoading: true };
 
-		case "CLOSE_MODAL":
-			return { ...state, isModalOpen: false };
+		case "OPEN_INFO_MODAL":
+			return { ...state, isReportModalOpen: true };
+
+		case "CLOSE_INFO_MODAL":
+			return { ...state, isReportModalOpen: false };
+
+		case "CLOSE_INFO_MODAL":
+			return { ...state, isInfoModalOpen: false };
 
 		case "UPDATE_EVENTS":
 			return { ...state, events: payload, isLoading: false };
@@ -15,7 +21,7 @@ const reducer = (state, action) => {
 			return {
 				...state,
 				currentEvent: action.payload,
-				isModalOpen: true,
+				isInfoModalOpen: true,
 			};
 
 		default:

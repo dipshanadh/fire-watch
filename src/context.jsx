@@ -10,8 +10,9 @@ const AppContext = createContext();
 const initialState = {
 	events: [],
 	tabOpen: "countries",
-	isLoading: true,
-	isModalOpen: false,
+	isLoading: false,
+	isInfoModalOpen: false,
+	isReportModalOpen: false,
 	currentEvent: {},
 	currentCoordinates: [],
 };
@@ -63,8 +64,16 @@ const AppProvider = ({ children }) => {
 		dispatch({ type: "UPDATE_CURRENT_EVENT", payload: currentEvent });
 	};
 
-	const closeModal = () => {
-		dispatch({ type: "CLOSE_MODAL" });
+	const closeInfoModal = () => {
+		dispatch({ type: "CLOSE_INFO_MODAL" });
+	};
+
+	const openReportModal = () => {
+		dispatch({ type: "OPEN_INFO_MODAL" });
+	};
+
+	const closeReportModal = () => {
+		dispatch({ type: "CLOSE_INFO_MODAL" });
 	};
 
 	useEffect(() => {
@@ -79,7 +88,15 @@ const AppProvider = ({ children }) => {
 	}, []);
 
 	return (
-		<AppContext.Provider value={{ ...state, updateEvent, closeModal }}>
+		<AppContext.Provider
+			value={{
+				...state,
+				updateEvent,
+				closeInfoModal,
+				openReportModal,
+				closeReportModal,
+			}}
+		>
 			{children}
 		</AppContext.Provider>
 	);
