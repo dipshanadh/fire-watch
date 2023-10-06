@@ -11,7 +11,8 @@ const initialState = {
 	events: [],
 	tabOpen: "countries",
 	isLoading: true,
-	isModalOpen: false,
+	isInfoModalOpen: false,
+	isReportModalOpen: false,
 	currentEvent: {},
 	currentCoordinates: [],
 };
@@ -23,17 +24,17 @@ const AppProvider = ({ children }) => {
 		const res = await fetch(eventUrl);
 		const data = await res.json();
 
-		const isWildFire = category => category.id === "wildfires";
+		const isWildFire = (category) => category.id === "wildfires";
 
-		const events = data.events.filter(event =>
+		const events = data.events.filter((event) =>
 			event.categories.some(isWildFire)
 		);
 
 		dispatch({ type: "UPDATE_EVENTS", payload: events });
 	};
 
-	const updateEvent = async eventID => {
-		const event = state.events.find(event => event.id === eventID);
+	const updateEvent = async (eventID) => {
+		const event = state.events.find((event) => event.id === eventID);
 
 		const res = await fetch(
 			`https://nominatim.openstreetmap.org/reverse?lat=${event.geometry[0].coordinates[1]}&lon=${event.geometry[0].coordinates[0]}&format=json`
@@ -63,14 +64,22 @@ const AppProvider = ({ children }) => {
 		dispatch({ type: "UPDATE_CURRENT_EVENT", payload: currentEvent });
 	};
 
-	const closeModal = () => {
-		dispatch({ type: "CLOSE_MODAL" });
+	const closeInfoModal = () => {
+		dispatch({ type: "CLOSE_INFO_MODAL" });
+	};
+
+	const openReportModal = () => {
+		dispatch({ type: "OPEN_INFO_MODAL" });
+	};
+
+	const closeReportModal = () => {
+		dispatch({ type: "CLOSE_INFO_MODAL" });
 	};
 
 	useEffect(() => {
 		fetchData();
 
-		navigator.geolocation.getCurrentPosition(pos => {
+		navigator.geolocation.getCurrentPosition((pos) => {
 			state.currentCoordinates = [
 				pos.coords.latitude,
 				pos.coords.longitude,
@@ -79,7 +88,15 @@ const AppProvider = ({ children }) => {
 	}, []);
 
 	return (
-		<AppContext.Provider value={{ ...state, updateEvent, closeModal }}>
+		<AppContext.Provider
+			value={{
+				...state,
+				updateEvent,
+				closeInfoModal,
+				openReportModal,
+				closeReportModal,
+			}}
+		>
 			{children}
 		</AppContext.Provider>
 	);

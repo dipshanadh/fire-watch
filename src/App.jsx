@@ -1,16 +1,20 @@
 import Map from "./components/Map";
 import Sidebar from "./components/Sidebar";
-import Modal from "./components/Modal";
+import Recent from "./components/Recent";
+import InfoModal from "./components/Modals/InfoModal";
+import ReportModal from "./components/Modals/ReportModal";
 
 import { useGlobalContext } from "./context";
 const App = () => {
-	const { isModalOpen } = useGlobalContext();
+	const { isInfoModalOpen, isReportModalOpen } = useGlobalContext();
 
 	return (
 		<>
 			<Sidebar />
 			<Map />
-			{isModalOpen && <Modal />}
+			<Recent />
+			{isInfoModalOpen && <InfoModal />}
+			{isReportModalOpen && <ReportModal />}
 		</>
 	);
 };

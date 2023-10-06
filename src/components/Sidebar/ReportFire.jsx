@@ -1,5 +1,13 @@
+import { useGlobalContext } from "../../context";
+
 const ReportFire = () => {
-	return <button className="report">Report +</button>;
+	const { openReportModal } = useGlobalContext();
+
+	return (
+		<button className="report" onClick={() => openReportModal()}>
+			Report +
+		</button>
+	);
 };
 
 export default ReportFire;

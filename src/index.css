@@ -19,6 +19,10 @@
 	font-family: "Poppins", sans-serif;
 }
 
+body {
+	color: var(--clr-neutral);
+}
+
 .sidebar {
 	width: 256px;
 	height: 100vh;
@@ -28,6 +32,9 @@
 	display: flex;
 	flex-direction: column;
 	gap: 32px;
+	background: #232d2e;
+	box-shadow: 7px 7px 43px 31px rgba(0, 0, 0, 0.25);
+	z-index: 10;
 }
 
 .sidebar-heading {
@@ -41,6 +48,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
+	margin-bottom: auto;
 }
 
 .place-item {
@@ -75,11 +83,11 @@
 	height: 100vh;
 	position: fixed;
 	top: 0px;
-	left: 256px;
+	left: 250px;
 	width: 100%;
 }
 
-.modal {
+.info-modal {
 	border-radius: 0.75rem;
 	border: 1px solid rgba(255, 255, 255, 0);
 	background: rgba(35, 45, 46, 0.85);
@@ -117,4 +125,80 @@
 
 .modal-body span {
 	font-weight: 500;
+}
+
+.report-modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.74);
+	display: grid;
+	place-items: center;
+}
+
+.report-modal-container {
+	border-radius: 24.319px;
+	background: #232d2e;
+	backdrop-filter: blur(19.10740852355957px);
+	text-align: center;
+}
+
+.report-top {
+	padding: 2em;
+}
+
+.report-header {
+	color: #a73121;
+	font-size: 29.53px;
+	font-weight: 500;
+	letter-spacing: -0.709px;
+}
+
+.report-text {
+	font-size: 22.581px;
+	font-weight: 500;
+	letter-spacing: -0.135px;
+}
+
+.report-line {
+	width: 208px;
+	height: 1px;
+	margin-inline: auto;
+	background: linear-gradient(
+		270deg,
+		rgba(167, 49, 33, 0.5) 0%,
+		#a73121 55.73%,
+		rgba(167, 49, 33, 0.49) 100%
+	);
+	filter: blur(0.5px);
+	margin-bottom: 10px;
+}
+
+.report-bottom {
+	text-align: center;
+	border: none;
+	border-top: 0.5px solid hsla(0, 0%, 50%, 0.5);
+	padding: 1.5em;
+	background: none;
+	outline: none;
+	width: 100%;
+	color: #ececec;
+	font-size: 1.2rem;
+}
+
+.recent {
+	color: #ececec;
+	border-radius: 15.059px;
+	background: #232d2e;
+	box-shadow: 0px 1.56052px 19.57647px -6.02353px #000;
+	position: fixed;
+	left: calc(256px + 64px);
+	top: 16px;
+	padding: 12px 16px;
+	-moz-appearance: none; /* Firefox */
+	-webkit-appearance: none; /* Safari and Chrome */
+	appearance: none;
+	text-align: center;
 }

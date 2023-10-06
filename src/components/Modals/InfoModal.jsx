@@ -1,15 +1,15 @@
-import { useGlobalContext } from "../context";
+import { useGlobalContext } from "../../context";
 
-const Modal = () => {
-	const { currentEvent, closeModal } = useGlobalContext();
+const InfoModal = () => {
+	const { currentEvent, closeInfoModal } = useGlobalContext();
 
 	const { title, date, location, distance, link, coordinates } = currentEvent;
 
 	return (
-		<div className="modal">
+		<div className="info-modal">
 			<button
 				className="modal-close"
-				onClick={() => closeModal()}
+				onClick={() => closeInfoModal()}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -53,4 +53,4 @@ const Modal = () => {
 	);
 };
 
-export default Modal;
+export default InfoModal;
