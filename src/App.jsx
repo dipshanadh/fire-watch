@@ -1,7 +1,7 @@
 import Map from "./components/Map";
 import Sidebar from "./components/Sidebar";
 import Loader from "./components/Loader";
-import Recent from "./components/Recent";
+import FilterOpt from "./components/FilterOpt";
 import InfoModal from "./components/Modals/InfoModal";
 import ReportModal from "./components/Modals/ReportModal";
 
@@ -17,7 +17,7 @@ const App = () => {
 		<>
 			<Sidebar />
 			<Map />
-			<Recent />
+			<FilterOpt />
 			{isInfoModalOpen && <InfoModal />}
 			{isReportModalOpen && <ReportModal />}
 		</>

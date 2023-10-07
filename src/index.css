@@ -188,19 +188,36 @@ body {
 	font-size: 1.2rem;
 }
 
-.recent {
+.filter {
 	color: #ececec;
-	border-radius: 15.059px;
+	border-radius: 15px;
 	background: #232d2e;
 	box-shadow: 0px 1.56052px 19.57647px -6.02353px #000;
+	padding: 12px 36px;
+	appearance: none;
+}
+
+.custom-select {
 	position: fixed;
 	left: calc(256px + 64px);
 	top: 16px;
-	padding: 12px 16px;
-	-moz-appearance: none; /* Firefox */
-	-webkit-appearance: none; /* Safari and Chrome */
-	appearance: none;
-	text-align: center;
+}
+
+.custom-arrow {
+	display: grid;
+	place-items: center;
+	height: 48px;
+	width: 3rem;
+	position: absolute;
+	top: 0;
+	right: 0;
+	border-top-right-radius: 15px;
+	border-bottom-right-radius: 15px;
+	pointer-events: none;
+}
+
+.custom-arrow:focus {
+	rotate: 180deg;
 }
 
 .loader {

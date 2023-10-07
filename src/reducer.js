@@ -6,13 +6,16 @@ const reducer = (state, action) => {
 			return { ...state, isLoading: true };
 
 		case "OPEN_INFO_MODAL":
+			return { ...state, isInfoModalOpen: true };
+
+		case "OPEN_REPORT_MODAL":
 			return { ...state, isReportModalOpen: true };
 
 		case "CLOSE_INFO_MODAL":
-			return { ...state, isReportModalOpen: false };
-
-		case "CLOSE_INFO_MODAL":
 			return { ...state, isInfoModalOpen: false };
+
+		case "CLOSE_REPORT_MODAL":
+			return { ...state, isReportModalOpen: false };
 
 		case "UPDATE_EVENTS":
 			return { ...state, events: payload, isLoading: false };
