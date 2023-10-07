@@ -6,25 +6,22 @@ const ReportModal = () => {
 
 	const [city, setCity] = useState("");
 
-	const handleSubmit = (e) => {
+	const handleSubmit = e => {
 		e.preventDefault();
 	};
 
 	return (
 		<div
 			className="report-modal-overlay"
-			onClick={() => closeReportModal()}
-		>
+			onClick={() => closeReportModal()}>
 			<form
 				className="report-modal-container"
-				onClick={(e) => e.stopPropagation()}
-				onSubmit={(e) => handleSubmit(e)}
-			>
+				onClick={e => e.stopPropagation()}
+				onSubmit={e => handleSubmit(e)}>
 				<button
 					className="modal-close"
 					type="button"
-					onClick={() => closeReportModal()}
-				>
+					onClick={() => closeReportModal()}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -32,8 +29,7 @@ const ReportModal = () => {
 						strokeWidth={1.5}
 						stroke="white"
 						width="25px"
-						height="25px"
-					>
+						height="25px">
 						<path
 							strokeLinecap="round"
 							strokeLinejoin="round"
@@ -45,7 +41,7 @@ const ReportModal = () => {
 					<h2 className="report-header">Report</h2>
 					<div className="report-line"></div>
 					<p className="report-text">
-						Enter the name of a place you <br /> want to report
+						Enter the name of a place you want to report
 					</p>
 				</div>
 				<input
@@ -53,7 +49,7 @@ const ReportModal = () => {
 					placeholder="City name"
 					name="city"
 					value={city}
-					onChange={(e) => setCity(e.target.value)}
+					onChange={e => setCity(e.target.value)}
 					autoFocus
 				/>
 			</form>

@@ -16,6 +16,7 @@ const initialState = {
 	currentEvent: {},
 	currentCoordinates: [],
 	limitDays: null,
+	user: null,
 };
 
 const AppProvider = ({ children }) => {
@@ -27,17 +28,17 @@ const AppProvider = ({ children }) => {
 		const res = await fetch(eventUrl + state.limitDays);
 		const data = await res.json();
 
-		const isWildFire = (category) => category.id === "wildfires";
+		const isWildFire = category => category.id === "wildfires";
 
-		const events = data.events.filter((event) =>
+		const events = data.events.filter(event =>
 			event.categories.some(isWildFire)
 		);
 
 		dispatch({ type: "UPDATE_EVENTS", payload: events });
 	};
 
-	const updateEvent = async (eventID) => {
-		const event = state.events.find((event) => event.id === eventID);
+	const updateEvent = async eventID => {
+		const event = state.events.find(event => event.id === eventID);
 
 		const res = await fetch(
 			`https://nominatim.openstreetmap.org/reverse?lat=${event.geometry[0].coordinates[1]}&lon=${event.geometry[0].coordinates[0]}&format=json`
@@ -79,7 +80,12 @@ const AppProvider = ({ children }) => {
 		dispatch({ type: "CLOSE_REPORT_MODAL" });
 	};
 
-	const handleChange = (value) => {
+	const setUser = user => {
+		localStorage.setItem("user", JSON.stringify(user));
+		dispatch({ type: "SET_USER", payload: user });
+	};
+
+	const handleChange = value => {
 		switch (value) {
 			case "recent":
 				dispatch({ type: "UPDATE_DAYS", payload: 3 });
@@ -102,12 +108,23 @@ const AppProvider = ({ children }) => {
 	useEffect(() => {
 		fetchData();
 
-		navigator.geolocation.getCurrentPosition((pos) => {
-			state.currentCoordinates = [
-				pos.coords.latitude,
-				pos.coords.longitude,
-			];
-		});
+		if ("geolocation" in navigator)
+			navigator.geolocation.getCurrentPosition(pos => {
+				dispatch({
+					type: "SET_CURRENT_COORDINATES",
+					payload: [pos.coords.latitude, pos.coords.longitude],
+				});
+			});
+		else
+			alert(
+				"Some functinalities may not available, since location is not available."
+			);
+
+		if (JSON.stringify(localStorage.getItem("user")))
+			dispatch({
+				type: "SET_USER",
+				payload: localStorage.getItem("user"),
+			});
 	}, [state.limitDays]);
 
 	return (
@@ -119,8 +136,8 @@ const AppProvider = ({ children }) => {
 				openReportModal,
 				closeReportModal,
 				handleChange,
-			}}
-		>
+				setUser,
+			}}>
 			{children}
 		</AppContext.Provider>
 	);

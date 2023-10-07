@@ -23,6 +23,10 @@ body {
 	color: var(--clr-neutral);
 }
 
+button {
+	cursor: pointer;
+}
+
 .sidebar {
 	width: 256px;
 	height: 100vh;
@@ -123,7 +127,6 @@ body {
 	background: none;
 	outline: none;
 	border: none;
-	cursor: pointer;
 }
 
 .modal-heading {
@@ -189,14 +192,14 @@ body {
 		rgba(167, 49, 33, 0.49) 100%
 	);
 	filter: blur(0.5px);
-	margin-bottom: 10px;
+	margin-bottom: 16px;
 }
 
 .report-bottom {
 	text-align: center;
 	border: none;
 	border-top: 0.5px solid hsla(0, 0%, 50%, 0.5);
-	padding: 1.5em;
+	padding: 1em;
 	background: none;
 	outline: none;
 	width: 100%;
@@ -209,7 +212,7 @@ body {
 	border-radius: 15px;
 	background: #232d2e;
 	box-shadow: 0px 1.56052px 19.57647px -6.02353px #000;
-	padding: 12px 36px;
+	padding: 8px 16px;
 	appearance: none;
 }
 
@@ -222,11 +225,11 @@ body {
 .custom-arrow {
 	display: grid;
 	place-items: center;
-	height: 48px;
-	width: 3.5rem;
+	height: 40px;
+	width: 2rem;
 	position: absolute;
 	top: 0;
-	right: 0;
+	right: 10px;
 	border-top-right-radius: 15px;
 	border-bottom-right-radius: 15px;
 	pointer-events: none;
@@ -250,4 +253,23 @@ body {
 
 .loader h1 {
 	color: var(--clr-tertiary);
+}
+
+.auth {
+	position: fixed;
+	right: 32px;
+	top: 16px;
+	color: #ececec;
+	border-radius: 20px;
+	background: #232d2e;
+	box-shadow: 0px 1.56052px 19.57647px -6.02353px #000;
+	padding: 8px 16px;
+	border: none;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.auth-img {
+	border-radius: 50%;
 }

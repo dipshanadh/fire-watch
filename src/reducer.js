@@ -9,25 +9,53 @@ const reducer = (state, action) => {
 			return { ...state, isInfoModalOpen: true };
 
 		case "OPEN_REPORT_MODAL":
-			return { ...state, isReportModalOpen: true };
+			return {
+				...state,
+				isReportModalOpen: true,
+			};
 
 		case "CLOSE_INFO_MODAL":
-			return { ...state, isInfoModalOpen: false };
+			return {
+				...state,
+				isInfoModalOpen: false,
+			};
 
 		case "CLOSE_REPORT_MODAL":
-			return { ...state, isReportModalOpen: false };
+			return {
+				...state,
+				isReportModalOpen: false,
+			};
 
 		case "UPDATE_EVENTS":
-			return { ...state, events: payload, isLoading: false };
+			return {
+				...state,
+				events: payload,
+				isLoading: false,
+			};
 
 		case "UPDATE_DAYS":
-			return { ...state, limitDays: payload };
+			return {
+				...state,
+				limitDays: payload,
+			};
 
 		case "UPDATE_CURRENT_EVENT":
 			return {
 				...state,
 				currentEvent: action.payload,
 				isInfoModalOpen: true,
+			};
+
+		case "SET_CURRENT_COORDINATES":
+			return {
+				...state,
+				currentCoordinates: payload,
+			};
+
+		case "SET_USER":
+			return {
+				...state,
+				user: payload,
 			};
 
 		default:

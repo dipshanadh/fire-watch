@@ -7,14 +7,12 @@ const PlaceList = () => {
 		{ name: "Australia", code: "au" },
 		{ name: "Brazil", code: "br" },
 		{ name: "Russia", code: "ru" },
-		{ name: "China", code: "cn" },
 		{ name: "South Africa", code: "za" },
-		{ name: "Argentina", code: "ar" },
 	];
 
 	return (
 		<div className="place-list">
-			{wildfireCountries.map((country) => (
+			{wildfireCountries.map(country => (
 				<PlaceItem
 					key={country.code}
 					name={country.name}
