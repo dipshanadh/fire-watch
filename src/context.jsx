@@ -3,7 +3,7 @@ import { useEffect, useReducer, createContext, useContext } from "react";
 import reducer from "./reducer";
 import calculateDistance from "./utils/calculateDistance";
 
-const eventUrl = "https://eonet.gsfc.nasa.gov/api/v3/events";
+const eventUrl = "https://eonet.gsfc.nasa.gov/api/v3/events?days=";
 
 const AppContext = createContext();
 
@@ -15,13 +15,16 @@ const initialState = {
 	isReportModalOpen: false,
 	currentEvent: {},
 	currentCoordinates: [],
+	limitDays: null,
 };
 
 const AppProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	const fetchData = async () => {
-		const res = await fetch(eventUrl);
+		dispatch({ type: "LOADING" });
+
+		const res = await fetch(eventUrl + state.limitDays);
 		const data = await res.json();
 
 		const isWildFire = (category) => category.id === "wildfires";
@@ -76,6 +79,26 @@ const AppProvider = ({ children }) => {
 		dispatch({ type: "CLOSE_REPORT_MODAL" });
 	};
 
+	const handleChange = (value) => {
+		switch (value) {
+			case "recent":
+				dispatch({ type: "UPDATE_DAYS", payload: 3 });
+				break;
+
+			case "last-week":
+				dispatch({ type: "UPDATE_DAYS", payload: 7 });
+				break;
+
+			case "last-month":
+				dispatch({ type: "UPDATE_DAYS", payload: 30 });
+				break;
+
+			case "last-year":
+				dispatch({ type: "UPDATE_DAYS", payload: 365 });
+				break;
+		}
+	};
+
 	useEffect(() => {
 		fetchData();
 
@@ -85,7 +108,7 @@ const AppProvider = ({ children }) => {
 				pos.coords.longitude,
 			];
 		});
-	}, []);
+	}, [state.limitDays]);
 
 	return (
 		<AppContext.Provider
@@ -95,6 +118,7 @@ const AppProvider = ({ children }) => {
 				closeInfoModal,
 				openReportModal,
 				closeReportModal,
+				handleChange,
 			}}
 		>
 			{children}

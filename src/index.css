@@ -31,7 +31,7 @@ body {
 	font-size: 1.75rem;
 	display: flex;
 	flex-direction: column;
-	gap: 32px;
+	gap: 16px;
 	background: #232d2e;
 	box-shadow: 7px 7px 43px 31px rgba(0, 0, 0, 0.25);
 	z-index: 10;
@@ -44,11 +44,23 @@ body {
 	text-align: center;
 }
 
+.country {
+	border-radius: 7px;
+	background: #1e2126;
+	width: min-content;
+	color: #d8d8d8;
+	font-size: 16px;
+	font-weight: 600;
+	margin-inline: auto;
+	padding: 8px 16px;
+}
+
 .place-list {
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
 	margin-bottom: auto;
+	cursor: pointer;
 }
 
 .place-item {
@@ -57,7 +69,7 @@ body {
 	color: var(--clr-neutral);
 	font-size: 16px;
 	padding: 6px 8px;
-	border-left: 8px solid var(--clr-tertiary);
+	border-left: 8px solid hsla(7, 70%, 50%, 0.76);
 }
 
 .report {
@@ -67,10 +79,14 @@ body {
 	background: none;
 	color: #ececec;
 	text-align: center;
-	font-size: 0.7rem;
 	font-weight: 500;
+	font-size: 1rem;
 	padding: 8px 16px;
 	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
 }
 
 .copy {
@@ -207,7 +223,7 @@ body {
 	display: grid;
 	place-items: center;
 	height: 48px;
-	width: 3rem;
+	width: 3.5rem;
 	position: absolute;
 	top: 0;
 	right: 0;

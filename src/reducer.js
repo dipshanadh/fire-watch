@@ -20,6 +20,9 @@ const reducer = (state, action) => {
 		case "UPDATE_EVENTS":
 			return { ...state, events: payload, isLoading: false };
 
+		case "UPDATE_DAYS":
+			return { ...state, limitDays: payload };
+
 		case "UPDATE_CURRENT_EVENT":
 			return {
 				...state,

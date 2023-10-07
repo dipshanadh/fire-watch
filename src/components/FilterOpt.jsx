@@ -1,11 +1,16 @@
+import { useGlobalContext } from "../context";
+
 const FilterOpt = () => {
+	const { handleChange } = useGlobalContext();
+
 	return (
 		<div className="custom-select">
 			<select
 				name="filter"
 				className="filter"
+				onChange={(e) => handleChange(e.target.value)}
 			>
-				<option value="recent">Recent</option>
+				<option>Select</option>
 				<option value="last-week">Last week</option>
 				<option value="last-month">Last month</option>
 				<option value="last-year">Last year</option>

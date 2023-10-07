@@ -45,7 +45,7 @@ const ReportModal = () => {
 					<h2 className="report-header">Report</h2>
 					<div className="report-line"></div>
 					<p className="report-text">
-						Enter the name of a place you want to report
+						Enter the name of a place you <br /> want to report
 					</p>
 				</div>
 				<input
