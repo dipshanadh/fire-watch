@@ -1,15 +1,27 @@
-import { MapContainer, TileLayer } from "react-leaflet";
+import { useEffect } from "react";
+import { MapContainer, TileLayer, useMap } from "react-leaflet";
 
 import MyMarker from "./Marker";
 
 import { useGlobalContext } from "../../context";
 
+const Foo = ({ centralCoordinates }) => {
+	const map = useMap();
+
+	useEffect(() => {
+		map.setView(centralCoordinates);
+		map.setZoom(6);
+	}, [centralCoordinates]);
+
+	return <></>;
+};
+
 const Map = () => {
-	const { isLoading, events } = useGlobalContext();
+	const { centralCoordinates, isLoading, events } = useGlobalContext();
 
 	return (
 		<MapContainer
-			center={[40.758701, -111.876183]}
+			center={centralCoordinates}
 			zoom={5}
 			scrollWheelZoom={true}
 			className="map"
@@ -27,6 +39,7 @@ const Map = () => {
 						event={event}
 					/>
 				))}
+			<Foo centralCoordinates={centralCoordinates} />
 		</MapContainer>
 	);
 };

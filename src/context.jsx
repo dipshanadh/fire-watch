@@ -17,6 +17,7 @@ const initialState = {
 	currentCoordinates: [],
 	limitDays: null,
 	user: null,
+	centralCoordinates: [40.758701, -111.876183],
 };
 
 const AppProvider = ({ children }) => {
@@ -105,6 +106,10 @@ const AppProvider = ({ children }) => {
 		}
 	};
 
+	const setCentralCoordinates = (coordinates) => {
+		dispatch({ type: "SET_CENTRAL_COORDINATES", payload: coordinates });
+	};
+
 	useEffect(() => {
 		fetchData();
 
@@ -137,6 +142,7 @@ const AppProvider = ({ children }) => {
 				closeReportModal,
 				handleChange,
 				setUser,
+				setCentralCoordinates,
 			}}
 		>
 			{children}

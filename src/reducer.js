@@ -64,6 +64,9 @@ const reducer = (state, action) => {
 				user: null,
 			};
 
+		case "SET_CENTRAL_COORDINATES":
+			return { ...state, centralCoordinates: payload };
+
 		default:
 			throw new Error("No matching action type!");
 	}
