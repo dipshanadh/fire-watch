@@ -8,7 +8,7 @@ const FilterOpt = () => {
 			<select
 				name="filter"
 				className="filter"
-				onChange={(e) => handleChange(e.target.value)}
+				onChange={e => handleChange(e.target.value)}
 			>
 				<option>Select</option>
 				<option value="last-week">Last week</option>

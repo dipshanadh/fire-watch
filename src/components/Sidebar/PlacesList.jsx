@@ -36,7 +36,7 @@ const PlaceList = () => {
 
 	return (
 		<div className="place-list">
-			{wildfireCountries.map((country) => (
+			{wildfireCountries.map(country => (
 				<PlaceItem
 					key={country.code}
 					name={country.name}

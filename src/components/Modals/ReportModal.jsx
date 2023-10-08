@@ -13,15 +13,18 @@ const ReportModal = () => {
 	return (
 		<div
 			className="report-modal-overlay"
-			onClick={() => closeReportModal()}>
+			onClick={() => closeReportModal()}
+		>
 			<form
 				className="report-modal-container"
 				onClick={e => e.stopPropagation()}
-				onSubmit={e => handleSubmit(e)}>
+				onSubmit={e => handleSubmit(e)}
+			>
 				<button
 					className="modal-close"
 					type="button"
-					onClick={() => closeReportModal()}>
+					onClick={() => closeReportModal()}
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -29,7 +32,8 @@ const ReportModal = () => {
 						strokeWidth={1.5}
 						stroke="white"
 						width="25px"
-						height="25px">
+						height="25px"
+					>
 						<path
 							strokeLinecap="round"
 							strokeLinejoin="round"

@@ -7,7 +7,9 @@ const Auth = () => {
 	const { user, setUser } = useGlobalContext();
 
 	const handleLogin = () => {
-		signInWithPopup(auth, provider).then((data) => setUser(data.user));
+		signInWithPopup(auth, provider)
+			.then(data => setUser(data.user))
+			.catch(() => alert("Could not sign in"));
 	};
 
 	const handleLogout = () => {

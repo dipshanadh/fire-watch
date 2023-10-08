@@ -1,7 +1,9 @@
 import { useEffect, useReducer, createContext, useContext } from "react";
+import { getDocs, collection } from "firebase/firestore";
 
 import reducer from "./reducer";
 import calculateDistance from "./utils/calculateDistance";
+import { db } from "./config";
 
 const eventUrl = "https://eonet.gsfc.nasa.gov/api/v3/events?days=";
 
@@ -9,6 +11,7 @@ const AppContext = createContext();
 
 const initialState = {
 	events: [],
+	reportedEvents: [],
 	tabOpen: "countries",
 	isLoading: true,
 	isInfoModalOpen: false,
@@ -29,17 +32,30 @@ const AppProvider = ({ children }) => {
 		const res = await fetch(eventUrl + state.limitDays);
 		const data = await res.json();
 
-		const isWildFire = (category) => category.id === "wildfires";
+		const isWildFire = category => category.id === "wildfires";
 
-		const events = data.events.filter((event) =>
+		const events = data.events.filter(event =>
 			event.categories.some(isWildFire)
 		);
 
-		dispatch({ type: "UPDATE_EVENTS", payload: events });
+		const reportedEvents = await getDocs(collection(db, "reports"));
+
+		dispatch({
+			type: "UPDATE_EVENTS",
+			payload: {
+				events,
+				reportedEvents: reportedEvents.docs.map(doc => ({
+					...doc.data(),
+					id: doc.id,
+				})),
+			},
+		});
+
+		console.log(state.reportedEvents);
 	};
 
-	const updateEvent = async (eventID) => {
-		const event = state.events.find((event) => event.id === eventID);
+	const updateEvent = async eventID => {
+		const event = state.events.find(event => event.id === eventID);
 
 		const res = await fetch(
 			`https://nominatim.openstreetmap.org/reverse?lat=${event.geometry[0].coordinates[1]}&lon=${event.geometry[0].coordinates[0]}&format=json`
@@ -81,12 +97,12 @@ const AppProvider = ({ children }) => {
 		dispatch({ type: "CLOSE_REPORT_MODAL" });
 	};
 
-	const setUser = (user) => {
+	const setUser = user => {
 		localStorage.setItem("user", JSON.stringify(user));
 		dispatch({ type: "SET_USER", payload: user });
 	};
 
-	const handleChange = (value) => {
+	const handleChange = value => {
 		switch (value) {
 			case "recent":
 				dispatch({ type: "UPDATE_DAYS", payload: 3 });
@@ -106,7 +122,7 @@ const AppProvider = ({ children }) => {
 		}
 	};
 
-	const setCentralCoordinates = (coordinates) => {
+	const setCentralCoordinates = coordinates => {
 		dispatch({ type: "SET_CENTRAL_COORDINATES", payload: coordinates });
 	};
 
@@ -114,7 +130,7 @@ const AppProvider = ({ children }) => {
 		fetchData();
 
 		if ("geolocation" in navigator)
-			navigator.geolocation.getCurrentPosition((pos) => {
+			navigator.geolocation.getCurrentPosition(pos => {
 				dispatch({
 					type: "SET_CURRENT_COORDINATES",
 					payload: [pos.coords.latitude, pos.coords.longitude],

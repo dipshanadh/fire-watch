@@ -33,7 +33,7 @@ const Map = () => {
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 			/>
 			{!isLoading &&
-				events.map((event) => (
+				events.map(event => (
 					<MyMarker
 						key={event.id}
 						event={event}
