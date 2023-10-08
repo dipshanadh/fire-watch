@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 
 import MyMarker from "./Marker";
+import ReportedMarker from "./ReportedMarker";
 
 import { useGlobalContext } from "../../context";
 
@@ -17,7 +18,8 @@ const Foo = ({ centralCoordinates }) => {
 };
 
 const Map = () => {
-	const { centralCoordinates, isLoading, events } = useGlobalContext();
+	const { centralCoordinates, isLoading, events, reportedEvents } =
+		useGlobalContext();
 
 	return (
 		<MapContainer
@@ -26,8 +28,7 @@ const Map = () => {
 			scrollWheelZoom={true}
 			className="map"
 			maxZoom={7}
-			minZoom={4}
-		>
+			minZoom={4}>
 			<TileLayer
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -35,6 +36,14 @@ const Map = () => {
 			{!isLoading &&
 				events.map(event => (
 					<MyMarker
+						key={event.id}
+						event={event}
+					/>
+				))}
+
+			{!isLoading &&
+				reportedEvents.map(event => (
+					<ReportedMarker
 						key={event.id}
 						event={event}
 					/>

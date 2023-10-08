@@ -50,12 +50,12 @@ const AppProvider = ({ children }) => {
 				})),
 			},
 		});
-
-		console.log(state.reportedEvents);
 	};
 
 	const updateEvent = async eventID => {
-		const event = state.events.find(event => event.id === eventID);
+		const event =
+			state.events.find(event => event.id === eventID) ||
+			state.reportedEvents.find(event => event.id === eventID);
 
 		const res = await fetch(
 			`https://nominatim.openstreetmap.org/reverse?lat=${event.geometry[0].coordinates[1]}&lon=${event.geometry[0].coordinates[0]}&format=json`
@@ -78,7 +78,7 @@ const AppProvider = ({ children }) => {
 				? `${data.address.city}, ${data.address.country}`
 				: data.address.country,
 			distance: calculateDistance(state.currentCoordinates, coordinates),
-			link: event.sources[0].url,
+			link: event.sources && event.sources[0].url,
 			coordinates,
 		};
 
@@ -159,8 +159,7 @@ const AppProvider = ({ children }) => {
 				handleChange,
 				setUser,
 				setCentralCoordinates,
-			}}
-		>
+			}}>
 			{children}
 		</AppContext.Provider>
 	);

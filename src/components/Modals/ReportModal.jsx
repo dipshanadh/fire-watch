@@ -1,30 +1,52 @@
+import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
 import { useGlobalContext } from "../../context";
+
+import { db } from "../../config";
 
 const ReportModal = () => {
 	const { closeReportModal } = useGlobalContext();
 
 	const [city, setCity] = useState("");
 
-	const handleSubmit = e => {
+	const handleSubmit = async e => {
 		e.preventDefault();
+
+		const res = await fetch(
+			`https://nominatim.openstreetmap.org/search?format=json&city=${city}&email=dipshanadh`
+		);
+		const data = await res.json();
+
+		if (!data) {
+			alert("Could not find the city");
+			location.reload();
+		}
+
+		await addDoc(collection(db, "reports"), {
+			title: `Fire in ${city}`,
+			geometry: [
+				{
+					coordinates: [data[0].lon, data[0].lat],
+					date: Date.now(),
+				},
+			],
+		});
+
+		location.reload();
 	};
 
 	return (
 		<div
 			className="report-modal-overlay"
-			onClick={() => closeReportModal()}
-		>
+			onClick={() => closeReportModal()}>
 			<form
 				className="report-modal-container"
 				onClick={e => e.stopPropagation()}
-				onSubmit={e => handleSubmit(e)}
-			>
+				onSubmit={e => handleSubmit(e)}>
 				<button
 					className="modal-close"
 					type="button"
-					onClick={() => closeReportModal()}
-				>
+					onClick={() => closeReportModal()}>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -32,8 +54,7 @@ const ReportModal = () => {
 						strokeWidth={1.5}
 						stroke="white"
 						width="25px"
-						height="25px"
-					>
+						height="25px">
 						<path
 							strokeLinecap="round"
 							strokeLinejoin="round"
