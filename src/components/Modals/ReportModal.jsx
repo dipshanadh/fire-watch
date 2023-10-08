@@ -23,7 +23,7 @@ const ReportModal = () => {
 		}
 
 		await addDoc(collection(db, "reports"), {
-			title: `Fire in ${city}`,
+			title: `Fire in ${city} [Reported]`,
 			geometry: [
 				{
 					coordinates: [data[0].lon, data[0].lat],
