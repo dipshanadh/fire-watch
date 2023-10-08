@@ -58,6 +58,12 @@ const reducer = (state, action) => {
 				user: payload,
 			};
 
+		case "LOGOUT":
+			return {
+				...state,
+				user: null,
+			};
+
 		default:
 			throw new Error("No matching action type!");
 	}

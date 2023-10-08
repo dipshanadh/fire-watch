@@ -13,13 +13,15 @@ const Map = () => {
 			zoom={5}
 			scrollWheelZoom={true}
 			className="map"
+			maxZoom={7}
+			minZoom={4}
 		>
 			<TileLayer
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 			/>
 			{!isLoading &&
-				events.map(event => (
+				events.map((event) => (
 					<MyMarker
 						key={event.id}
 						event={event}
