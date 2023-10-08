@@ -1,13 +1,19 @@
 import { useGlobalContext } from "../../context";
 
 const ReportFire = () => {
-	const { openReportModal } = useGlobalContext();
+	const { openReportModal, user } = useGlobalContext();
 
 	return (
 		<button
 			className="report"
-			onClick={() => openReportModal()}
-		>
+			onClick={() => {
+				if (!user) {
+					alert("Please login in order to report fire.");
+					return;
+				}
+
+				openReportModal();
+			}}>
 			Report{" "}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -16,8 +22,7 @@ const ReportFire = () => {
 				strokeWidth={2}
 				stroke="currentColor"
 				width="20px"
-				height="20px"
-			>
+				height="20px">
 				<path
 					strokeLinecap="round"
 					strokeLinejoin="round"

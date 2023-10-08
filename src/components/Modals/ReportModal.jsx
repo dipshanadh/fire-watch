@@ -18,7 +18,7 @@ const ReportModal = () => {
 		const data = await res.json();
 
 		if (!data) {
-			alert("Could not find the city");
+			alert("Could not find the city.");
 			location.reload();
 		}
 
