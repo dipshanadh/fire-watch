@@ -13,9 +13,9 @@ const PlaceList = () => {
 			coordinates: [56.1304, -106.3468],
 		},
 		{
-			name: "Australia",
-			code: "au",
-			coordinates: [-25.2744, 133.7751],
+			name: "Nepal",
+			code: "np",
+			coordinates: [28.3949, 84.124],
 		},
 		{
 			name: "Brazil",

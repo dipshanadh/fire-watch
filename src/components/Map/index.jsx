@@ -24,10 +24,10 @@ const Map = () => {
 	return (
 		<MapContainer
 			center={centralCoordinates}
-			zoom={5}
+			zoom={6}
 			scrollWheelZoom={true}
 			className="map"
-			maxZoom={7}
+			maxZoom={8}
 			minZoom={4}>
 			<TileLayer
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
