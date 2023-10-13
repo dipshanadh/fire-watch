@@ -1,8 +1,9 @@
 import { useEffect, useReducer, createContext, useContext } from "react";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, onSnapshot, query } from "firebase/firestore";
 
 import reducer from "./reducer";
 import calculateDistance from "./utils/calculateDistance";
+import isRecent from "./utils/isRecent";
 import { db } from "./config";
 
 const eventUrl = "https://eonet.gsfc.nasa.gov/api/v3/events?days=";
@@ -26,6 +27,8 @@ const initialState = {
 const AppProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
+	const reportsRef = collection(db, "reports");
+
 	const fetchData = async () => {
 		dispatch({ type: "LOADING" });
 
@@ -38,7 +41,7 @@ const AppProvider = ({ children }) => {
 			event.categories.some(isWildFire)
 		);
 
-		const reportedEvents = await getDocs(collection(db, "reports"));
+		const reportedEvents = await getDocs(reportsRef);
 
 		dispatch({
 			type: "UPDATE_EVENTS",
@@ -62,10 +65,13 @@ const AppProvider = ({ children }) => {
 		);
 		const data = await res.json();
 
-		const coordinates = [
-			Number(data.lat).toFixed(2),
-			Number(data.lon).toFixed(2),
-		];
+		const coordinates = [Number(data.lat), Number(data.lon)];
+
+		if (data.error) {
+			alert(data.error);
+			closeInfoModal();
+			return;
+		}
 
 		const currentEvent = {
 			title: event.title,
@@ -130,12 +136,12 @@ const AppProvider = ({ children }) => {
 		fetchData();
 
 		if ("geolocation" in navigator)
-			navigator.geolocation.getCurrentPosition(pos => {
+			navigator.geolocation.getCurrentPosition(pos =>
 				dispatch({
 					type: "SET_CURRENT_COORDINATES",
 					payload: [pos.coords.latitude, pos.coords.longitude],
-				});
-			});
+				})
+			);
 		else
 			alert(
 				"Some functinalities may not available, since location is not available."
@@ -146,6 +152,37 @@ const AppProvider = ({ children }) => {
 				type: "SET_USER",
 				payload: JSON.parse(localStorage.getItem("user")),
 			});
+
+		const queryMessages = query(reportsRef);
+
+		onSnapshot(queryMessages, snapshot => {
+			snapshot.docChanges().forEach(item => {
+				const event = item.doc.data();
+
+				if (
+					item.type === "added" &&
+					isRecent(new Date(event.geometry[0].date), Date.now())
+				)
+					alert(
+						`${
+							event.reportedBy.name
+						} reported a fire ${calculateDistance(
+							state.currentCoordinates,
+							event.geometry[0].coordinates
+						)} KMs away`
+					);
+			});
+
+			dispatch({
+				type: "UPDATE_EVENTS",
+				payload: {
+					reportedEvents: snapshot.docs.map(doc => ({
+						...doc.data(),
+						id: doc.id,
+					})),
+				},
+			});
+		});
 	}, [state.limitDays]);
 
 	return (

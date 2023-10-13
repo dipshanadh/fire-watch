@@ -1,7 +1,7 @@
 import { signInWithPopup } from "firebase/auth";
-import { auth, provider } from "../config";
+import { auth, provider } from "../../config";
 
-import { useGlobalContext } from "../context";
+import { useGlobalContext } from "../../context";
 
 const Auth = () => {
 	const { user, setUser } = useGlobalContext();
@@ -13,6 +13,8 @@ const Auth = () => {
 	};
 
 	const handleLogout = () => {
+		if (!confirm("Are you sure you want to logout?")) return;
+
 		localStorage.removeItem("user");
 		location.reload();
 	};
@@ -31,16 +33,14 @@ const Auth = () => {
 			</div>
 			<button
 				className="auth logout"
-				onClick={handleLogout}
-			>
+				onClick={handleLogout}>
 				Logout
 			</button>
 		</div>
 	) : (
 		<button
 			className="auth login"
-			onClick={handleLogin}
-		>
+			onClick={handleLogin}>
 			Login
 		</button>
 	);

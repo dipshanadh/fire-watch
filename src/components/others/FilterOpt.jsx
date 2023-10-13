@@ -1,4 +1,4 @@
-import { useGlobalContext } from "../context";
+import { useGlobalContext } from "../../context";
 
 const FilterOpt = () => {
 	const { handleChange } = useGlobalContext();
@@ -8,8 +8,7 @@ const FilterOpt = () => {
 			<select
 				name="filter"
 				className="filter"
-				onChange={e => handleChange(e.target.value)}
-			>
+				onChange={e => handleChange(e.target.value)}>
 				<option>Select</option>
 				<option value="last-week">Last week</option>
 				<option value="last-month">Last month</option>
@@ -23,8 +22,7 @@ const FilterOpt = () => {
 					strokeWidth={1.5}
 					stroke="currentColor"
 					width="18px"
-					height="18px"
-				>
+					height="18px">
 					<path
 						strokeLinecap="round"
 						strokeLinejoin="round"

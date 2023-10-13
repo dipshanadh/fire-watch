@@ -2,12 +2,15 @@ import { Icon } from "leaflet";
 import { Marker } from "react-leaflet";
 
 import { useGlobalContext } from "../../context";
+import isRecent from "../../utils/isRecent";
 
 const MyMarker = ({ event }) => {
 	const { updateEvent } = useGlobalContext();
 
 	const icon = new Icon({
-		iconUrl: "fire.png",
+		iconUrl: isRecent(new Date(event.geometry[0].date), Date.now)
+			? "green-fire.png"
+			: "fire.png",
 		iconSize: [32, 32],
 	});
 
@@ -22,7 +25,7 @@ const MyMarker = ({ event }) => {
 			eventHandlers={{
 				click: () => updateEvent(event.id),
 			}}
-		></Marker>
+		/>
 	);
 };
 

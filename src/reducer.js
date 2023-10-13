@@ -29,7 +29,7 @@ const reducer = (state, action) => {
 		case "UPDATE_EVENTS":
 			return {
 				...state,
-				events: payload.events,
+				events: payload.events ? payload.events : state.events,
 				reportedEvents: payload.reportedEvents,
 				isLoading: false,
 			};

@@ -5,12 +5,14 @@ import { useGlobalContext } from "../../context";
 import { db } from "../../config";
 
 const ReportModal = () => {
-	const { closeReportModal } = useGlobalContext();
+	const { closeReportModal, user } = useGlobalContext();
 
 	const [city, setCity] = useState("");
 
 	const handleSubmit = async e => {
 		e.preventDefault();
+
+		if (!confirm("Are you sure you want to report?")) return;
 
 		const res = await fetch(
 			`https://nominatim.openstreetmap.org/search?format=json&city=${city}&email=dipshanadh`
@@ -26,10 +28,14 @@ const ReportModal = () => {
 			title: `Fire in ${city} [Reported]`,
 			geometry: [
 				{
-					coordinates: [data[0].lon, data[0].lat],
+					coordinates: [Number(data[0].lon), Number(data[0].lat)],
 					date: Date.now(),
 				},
 			],
+			reportedBy: {
+				name: user.displayName,
+				photo: user.photoURL,
+			},
 		});
 
 		location.reload();

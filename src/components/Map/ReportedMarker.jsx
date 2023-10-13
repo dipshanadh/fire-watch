@@ -21,7 +21,8 @@ const ReportedMarker = ({ event }) => {
 			icon={icon}
 			eventHandlers={{
 				click: () => updateEvent(event.id),
-			}}></Marker>
+			}}
+		/>
 	);
 };
 
