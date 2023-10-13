@@ -182,16 +182,12 @@ const AppProvider = ({ children }) => {
 					);
 					const data = await res.json();
 
-					const location = data.address.city
-						? `${data.address.city}, ${data.address.country}`
-						: data.address.country;
-
 					toast.info(
 						`${
-							event.reportedBy.name
-						} reported a fire at ${location}, ${formatDateAgo(
-							event.geometry[0].date
-						)}`,
+							event.reportedBy.name.split(" ")[0]
+						} reported a fire at ${
+							data.address.city
+						}, ${formatDateAgo(event.geometry[0].date)}`,
 						{
 							position: toast.POSITION.BOTTOM_CENTER,
 							theme: "dark",
