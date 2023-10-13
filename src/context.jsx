@@ -13,6 +13,7 @@ import { db } from "./config";
 
 import calculateDistance from "./utils/calculateDistance";
 import isRecent from "./utils/isRecent";
+import { formatDateAgo, convertDate } from "./utils/formatDate";
 
 const eventUrl = "https://eonet.gsfc.nasa.gov/api/v3/events?days=";
 
@@ -84,11 +85,7 @@ const AppProvider = ({ children }) => {
 
 		const currentEvent = {
 			title: event.title,
-			date: new Date(event.geometry[0].date).toLocaleDateString("en-us", {
-				year: "numeric",
-				month: "long",
-				day: "numeric",
-			}),
+			date: convertDate(event.geometry[0].date),
 			location: data.address.city
 				? `${data.address.city}, ${data.address.country}`
 				: data.address.country,
@@ -190,9 +187,13 @@ const AppProvider = ({ children }) => {
 						: data.address.country;
 
 					toast.info(
-						`${event.reportedBy.name} reported a fire at ${location}`,
+						`${
+							event.reportedBy.name
+						} reported a fire at ${location}, ${formatDateAgo(
+							event.geometry[0].date
+						)}`,
 						{
-							position: toast.POSITION.BOTTOM_RIGHT,
+							position: toast.POSITION.BOTTOM_CENTER,
 							theme: "dark",
 							style: { borderRadius: "15px" },
 						}
