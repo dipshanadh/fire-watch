@@ -1,8 +1,9 @@
 import { Icon } from "leaflet";
 import { Marker } from "react-leaflet";
 
-import { useGlobalContext } from "../../context";
 import isRecent from "../../utils/isRecent";
+
+import { useGlobalContext } from "../../context";
 
 const MyMarker = ({ event }) => {
 	const { updateEvent } = useGlobalContext();

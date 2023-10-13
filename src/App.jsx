@@ -1,11 +1,14 @@
+import { ToastContainer } from "react-toastify";
+
 import Map from "./components/Map";
 import Sidebar from "./components/Sidebar";
-import Loader from "./components/Loader";
-import Auth from "./components/Auth";
-import FilterOpt from "./components/FilterOpt";
 
 import InfoModal from "./components/Modals/InfoModal";
 import ReportModal from "./components/Modals/ReportModal";
+
+import Auth from "./components/others/Auth";
+import FilterOpt from "./components/others/FilterOpt";
+import Loader from "./components/others/Loader";
 
 import { useGlobalContext } from "./context";
 
@@ -23,6 +26,7 @@ const App = () => {
 			<Auth />
 			{isInfoModalOpen && <InfoModal />}
 			{isReportModalOpen && <ReportModal />}
+			<ToastContainer />
 		</>
 	);
 };

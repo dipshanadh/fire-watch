@@ -213,6 +213,7 @@ button {
 	background: #232d2e;
 	box-shadow: 0px 1.56052px 19.57647px -6.02353px #000;
 	padding: 8px 16px;
+	padding-right: 32px;
 	appearance: none;
 }
 

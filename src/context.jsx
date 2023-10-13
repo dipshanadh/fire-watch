@@ -1,10 +1,18 @@
-import { useEffect, useReducer, createContext, useContext } from "react";
+import {
+	useEffect,
+	useReducer,
+	createContext,
+	useContext,
+	useRef,
+} from "react";
 import { getDocs, collection, onSnapshot, query } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 import reducer from "./reducer";
+import { db } from "./config";
+
 import calculateDistance from "./utils/calculateDistance";
 import isRecent from "./utils/isRecent";
-import { db } from "./config";
 
 const eventUrl = "https://eonet.gsfc.nasa.gov/api/v3/events?days=";
 
@@ -25,6 +33,7 @@ const initialState = {
 };
 
 const AppProvider = ({ children }) => {
+	const effectRan = useRef(false);
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	const reportsRef = collection(db, "reports");
@@ -135,54 +144,76 @@ const AppProvider = ({ children }) => {
 	useEffect(() => {
 		fetchData();
 
-		if ("geolocation" in navigator)
-			navigator.geolocation.getCurrentPosition(pos =>
+		if (effectRan.current === false) {
+			if ("geolocation" in navigator)
+				navigator.geolocation.getCurrentPosition(pos =>
+					dispatch({
+						type: "SET_CURRENT_COORDINATES",
+						payload: [pos.coords.latitude, pos.coords.longitude],
+					})
+				);
+			else
+				alert(
+					"Some functinalities may not available, since location is not available."
+				);
+
+			if (localStorage.getItem("user"))
 				dispatch({
-					type: "SET_CURRENT_COORDINATES",
-					payload: [pos.coords.latitude, pos.coords.longitude],
-				})
-			);
-		else
-			alert(
-				"Some functinalities may not available, since location is not available."
-			);
+					type: "SET_USER",
+					payload: JSON.parse(localStorage.getItem("user")),
+				});
 
-		if (localStorage.getItem("user"))
-			dispatch({
-				type: "SET_USER",
-				payload: JSON.parse(localStorage.getItem("user")),
-			});
+			const queryMessages = query(reportsRef);
 
-		const queryMessages = query(reportsRef);
+			onSnapshot(queryMessages, snapshot => {
+				snapshot.docChanges().forEach(async item => {
+					const event = item.doc.data();
 
-		onSnapshot(queryMessages, snapshot => {
-			snapshot.docChanges().forEach(item => {
-				const event = item.doc.data();
+					if (
+						!(
+							item.type === "added" &&
+							isRecent(
+								new Date(event.geometry[0].date),
+								Date.now()
+							)
+						)
+					)
+						return;
 
-				if (
-					item.type === "added" &&
-					isRecent(new Date(event.geometry[0].date), Date.now())
-				)
-					alert(
-						`${
-							event.reportedBy.name
-						} reported a fire ${calculateDistance(
-							state.currentCoordinates,
-							event.geometry[0].coordinates
-						)} KMs away`
+					const res = await fetch(
+						`https://nominatim.openstreetmap.org/reverse?lat=${event.geometry[0].coordinates[1]}&lon=${event.geometry[0].coordinates[0]}&format=json`
 					);
-			});
+					const data = await res.json();
 
-			dispatch({
-				type: "UPDATE_EVENTS",
-				payload: {
-					reportedEvents: snapshot.docs.map(doc => ({
-						...doc.data(),
-						id: doc.id,
-					})),
-				},
+					const location = data.address.city
+						? `${data.address.city}, ${data.address.country}`
+						: data.address.country;
+
+					toast.info(
+						`${event.reportedBy.name} reported a fire at ${location}`,
+						{
+							position: toast.POSITION.BOTTOM_RIGHT,
+							theme: "dark",
+							style: { borderRadius: "15px" },
+						}
+					);
+				});
+
+				dispatch({
+					type: "UPDATE_EVENTS",
+					payload: {
+						reportedEvents: snapshot.docs.map(doc => ({
+							...doc.data(),
+							id: doc.id,
+						})),
+					},
+				});
 			});
-		});
+		}
+
+		return () => {
+			effectRan.current = true;
+		};
 	}, [state.limitDays]);
 
 	return (

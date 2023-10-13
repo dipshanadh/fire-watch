@@ -1,8 +1,9 @@
 import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
-import { useGlobalContext } from "../../context";
 
 import { db } from "../../config";
+
+import { useGlobalContext } from "../../context";
 
 const ReportModal = () => {
 	const { closeReportModal, user } = useGlobalContext();
@@ -38,7 +39,7 @@ const ReportModal = () => {
 			},
 		});
 
-		location.reload();
+		closeReportModal();
 	};
 
 	return (

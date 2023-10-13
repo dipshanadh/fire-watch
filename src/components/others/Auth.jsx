@@ -1,4 +1,5 @@
 import { signInWithPopup } from "firebase/auth";
+
 import { auth, provider } from "../../config";
 
 import { useGlobalContext } from "../../context";
