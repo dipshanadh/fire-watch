@@ -16,10 +16,9 @@ const App = () => {
 	const { isLoading, isInfoModalOpen, isReportModalOpen } =
 		useGlobalContext();
 
-	return isLoading ? (
-		<Loader />
-	) : (
+	return (
 		<>
+			{isLoading && <Loader />}
 			<Sidebar />
 			<Map />
 			<FilterOpt />

@@ -6,7 +6,6 @@ const FilterOpt = () => {
 	return (
 		<div className="custom-select">
 			<select
-				name="filter"
 				className="filter"
 				onChange={e => handleChange(e.target.value)}>
 				<option>Select</option>

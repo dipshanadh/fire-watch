@@ -189,9 +189,13 @@ const AppProvider = ({ children }) => {
 							data.address.city
 						}, ${formatDateAgo(event.geometry[0].date)}`,
 						{
-							position: toast.POSITION.BOTTOM_CENTER,
+							position: toast.POSITION.BOTTOM_RIGHT,
 							theme: "dark",
-							style: { borderRadius: "15px" },
+							type: toast.TYPE.WARNING,
+							style: {
+								borderRadius: "15px",
+								backgroundColor: "var(--clr-primary)",
+							},
 						}
 					);
 				});

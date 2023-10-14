@@ -3,7 +3,7 @@
 :root {
 	--clr-primary: hsl(185, 14%, 16%);
 	--clr-secondary: hsl(200, 10%, 24%);
-	--clr-tertiary: hsl(7, 67%, 39%);
+	--clr-tertiary: hsl(11, 100%, 50%);
 	--clr-neutral: hsl(0, 0%, 93%);
 }
 
@@ -37,7 +37,6 @@ button {
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
-	background: #232d2e;
 	box-shadow: 7px 7px 43px 31px rgba(0, 0, 0, 0.25);
 	z-index: 10;
 }
@@ -74,7 +73,7 @@ button {
 	color: var(--clr-neutral);
 	font-size: 16px;
 	padding: 6px 8px;
-	border-left: 8px solid hsla(7, 70%, 50%, 0.76);
+	border-left: 8px solid var(--clr-tertiary);
 	text-align: left;
 }
 
@@ -83,7 +82,7 @@ button {
 	border: 1.12px solid var(--clr-tertiary);
 	box-shadow: 0px 1.12037px 14.56482px 2.24074px var(--clr-tertiary);
 	background: none;
-	color: #ececec;
+	color: var(--clr-neutral);
 	text-align: center;
 	font-weight: 500;
 	font-size: 1rem;
@@ -169,7 +168,7 @@ button {
 }
 
 .report-header {
-	color: #a73121;
+	color: var(--clr-tertiary);
 	font-size: 29.53px;
 	font-weight: 500;
 	letter-spacing: -0.709px;
@@ -188,7 +187,7 @@ button {
 	background: linear-gradient(
 		270deg,
 		rgba(167, 49, 33, 0.5) 0%,
-		#a73121 55.73%,
+		var(--clr-tertiary),
 		rgba(167, 49, 33, 0.49) 100%
 	);
 	filter: blur(0.5px);
@@ -245,7 +244,14 @@ button {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	min-height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100%;
+	z-index: 100;
+	background-color: white;
+	font-size: larger;
 }
 
 .loader img {
@@ -298,4 +304,12 @@ button {
 	position: fixed;
 	right: 32px;
 	top: 16px;
+}
+
+.Toastify__progress-bar {
+	background-color: var(--clr-tertiary);
+}
+
+.Toastify__toast-icon svg {
+	fill: var(--clr-tertiary);
 }
