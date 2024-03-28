@@ -3,12 +3,12 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-	apiKey: "AIzaSyBv9u6o1tQ3VkrgeTOhqo2Fj_uneX7d9ok",
-	authDomain: "pokhariya-firewatch.firebaseapp.com",
-	projectId: "pokhariya-firewatch",
-	storageBucket: "pokhariya-firewatch.appspot.com",
-	messagingSenderId: "737925005562",
-	appId: "1:737925005562:web:2b7606a1d5bfb888148943",
+	apiKey: "AIzaSyC87tMFlbC-WKeoJKAlSGBafg55xCkni1Q",
+	authDomain: "firewatch-9ed62.firebaseapp.com",
+	projectId: "firewatch-9ed62",
+	storageBucket: "firewatch-9ed62.appspot.com",
+	messagingSenderId: "547994341460",
+	appId: "1:547994341460:web:59a3a8456f3ed923b1ddc1",
 };
 
 const app = initializeApp(firebaseConfig);
